@@ -18,7 +18,7 @@ public class Note {
     }
 
     public Note(Long id, String title, String text) {
-        this(id, title, text, LocalDateTime.now(), LocalDateTime.now() );
+        this(id, title, text, LocalDateTime.now(), LocalDateTime.now());
     }
 
     public Note(String title, String text) {

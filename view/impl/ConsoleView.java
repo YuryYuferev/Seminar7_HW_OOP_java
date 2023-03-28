@@ -42,7 +42,7 @@ public class ConsoleView extends View<Note> {
 
                     System.out.println("----------------");
 
-                    for (Note note: notes) {
+                    for (Note note : notes) {
                         System.out.println(note);
                         System.out.println("----------------");
                     }

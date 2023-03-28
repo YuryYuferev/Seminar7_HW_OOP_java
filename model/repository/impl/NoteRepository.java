@@ -15,6 +15,7 @@ import java.util.Optional;
 public class NoteRepository implements Operational<Note> {
     private final Mappable<Note, String> mapper;
     private final Connector connector;
+
     public NoteRepository(Connector connector, String sep) {
         this.mapper = new NoteMapper(sep);
         this.connector = connector;
@@ -30,7 +31,7 @@ public class NoteRepository implements Operational<Note> {
         List<Note> notes = getAll();
         long lastId = 0L;
 
-        for (Note n: notes) {
+        for (Note n : notes) {
             long id = n.getId();
 
             if (lastId < id) lastId = id;
@@ -68,7 +69,7 @@ public class NoteRepository implements Operational<Note> {
             e.printStackTrace();
         }
 
-        for (String line: lines) notes.add(mapper.toInput(line));
+        for (String line : lines) notes.add(mapper.toInput(line));
 
         return notes;
     }
@@ -77,7 +78,7 @@ public class NoteRepository implements Operational<Note> {
     public Optional<Note> get(Long id) {
         List<Note> notes = getAll();
 
-        for (Note note: notes)
+        for (Note note : notes)
             if (note.getId().equals(id))
                 return Optional.of(note);
 
@@ -105,7 +106,7 @@ public class NoteRepository implements Operational<Note> {
     public boolean delete(Long id) {
         List<Note> notes = getAll();
 
-        for (Note note: notes) {
+        for (Note note : notes) {
             if (note.getId().equals(id)) {
                 notes.remove(note);
                 save(notes);
@@ -120,10 +121,10 @@ public class NoteRepository implements Operational<Note> {
     public void save(List<Note> notes) {
         List<String> lines = new ArrayList<>();
 
-        for (Note note: notes) lines.add(mapper.toOutput(note));
+        for (Note note : notes) lines.add(mapper.toOutput(note));
 
         try (FileWriter writer = new FileWriter(connector.uri, false)) {
-            for (String line: lines) writer.write(line + "\n");
+            for (String line : lines) writer.write(line + "\n");
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
